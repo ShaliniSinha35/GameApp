@@ -2,20 +2,21 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import LoginScreen from "../Screens/LoginScreen";
-import RegisterScreen from "../Screens/RegisterScreen";
-import ProfileScreen from "../Screens/ProfileScreen";
-import HelpScreen from "../Screens/HelpScreen";
-import BookingScreen from "../Screens/BookingScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Entypo } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import Home from "../Screens/Home";
+import Profile from "../Screens/Profile";
+import Quiz from "../Screens/Quiz";
+import Referral from "../Screens/Referral";
+import Wallet from "../Screens/Wallet";
+import Login from "../Screens/Login";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import CartScreen from "../Screens/CartScreen";
+import { MaterialIcons } from '@expo/vector-icons';
 
-
+import { FontAwesome5 } from '@expo/vector-icons';
+import Result from "../Screens/Result";
 
 
 const StackNavigator = () => {
@@ -29,59 +30,91 @@ const StackNavigator = () => {
           component={Home}
           options={{
             tabBarLabel: "Home",
-            tabBarLabelStyle: { color: "#FEBE10" },
+            tabBarLabelStyle: { color: "#f01c8b",fontSize:12 },
             headerShown: false,
             tabBarIcon: ({ focused }) =>
               focused ? (
-                <Entypo name="home" size={24} color="#00008b" />
+                <Entypo name="home" size={24} color="#41b7d1" />
               ) : (
-                <AntDesign name="home" size={24} color="black" />
+                <AntDesign name="home" size={24} color="gray" />
               ),
           }}
         />
-         <Tab.Screen
-          name="Booking & Plans"
-          component={BookingScreen}
-          options={{
-            tabBarLabel: "Booking",
-            tabBarLabelStyle: { color: "#FEBE10" },
-            tabBarIcon: ({ focused }) =>
-              focused ? (
-                <MaterialCommunityIcons name="clipboard-text" size={24} color="#00008b" />
-              ) : (
-                <MaterialCommunityIcons name="clipboard-text-outline" size={24} color="black" />
-              ),
-          }}
-        />
-
-        <Tab.Screen
+         {/* <Tab.Screen
           name="Profile"
-          component={ProfileScreen}
+          component={Profile}
           options={{
             tabBarLabel: "Profile",
-            tabBarLabelStyle: { color: "#FEBE10" },
+            tabBarLabelStyle: { color: "#f01c8b",fontSize:12 },
             tabBarIcon: ({ focused }) =>
               focused ? (
-                <Ionicons name="person" size={24} color="#00008b" />
+                <FontAwesome5 name="user-alt" size={24} color="#41b7d1" />
+                ) : (
+                  <FontAwesome5 name="user-alt" size={24} color="gray" />
+              ),
+          }}
+        /> */}
+
+        <Tab.Screen
+          name="Quiz To Earn"
+          component={Quiz}
+          options={{
+            headerShown:false,
+            tabBarLabel: "Quiz To Earn",
+            tabBarLabelStyle: { color: "#f01c8b",fontSize:12 },
+            tabBarIcon: ({ focused }) =>
+              focused ? (
+                <MaterialIcons name="quiz" size={24} color="#41b7d1" />
               ) : (
-                <Ionicons name="person-outline" size={24} color="black" />
+                <MaterialIcons name="quiz" size={24} color="gray" />
               ),
           }}
         />
 
        
-        <Tab.Screen
-          name="Cart"
-          component={CartScreen}
+        {/* <Tab.Screen
+          name="Wallet"
+          component={Wallet}
           options={{
-            tabBarLabel: "Cart",
-            tabBarLabelStyle: { color: "#FEBE10" },
+            tabBarLabel: "Wallet",
+            tabBarLabelStyle: { color: "#f01c8b",fontSize:12 },
             tabBarIcon: ({ focused }) =>
               focused ? (
-                <Entypo name="shopping-cart" size={24} color="#00008b" />
+                <Ionicons name="wallet-sharp" size={24} color="#41b7d1" />
               
               ) : (
-                <AntDesign name="shoppingcart" size={24} color="black" />
+                <Ionicons name="wallet-sharp" size={24} color="gray" />
+              ),
+          }}
+        /> */}
+          <Tab.Screen
+          name="Referral"
+          component={Referral}
+          options={{
+            tabBarLabel: "Referral",
+            tabBarLabelStyle: { color: "#f01c8b",fontSize:12 },
+            tabBarIcon: ({ focused }) =>
+              focused ? (
+                <Ionicons name="send" size={24} color="#41b7d1" />
+              
+              ) : (
+                <Ionicons name="send" size={24} color="gray" />
+              ),
+          }}
+        />
+          <Tab.Screen
+          name="Login"
+          component={Login}
+          options={{
+          
+            tabBarLabel: "Login",
+            tabBarLabelStyle: { color: "#f01c8b",fontSize:12 },
+            tabBarIcon: ({ focused }) =>
+              focused ? (
+                <AntDesign name="login" size={24} color="#41b7d1" />
+              
+              ) : (
+                <AntDesign name="login" size={24} color="gray" />
               ),
           }}
         />
@@ -91,7 +124,7 @@ const StackNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
+        {/* <Stack.Screen
           name="Login"
           component={LoginScreen}
           options={{ headerShown: false }}
@@ -100,13 +133,25 @@ const StackNavigator = () => {
           name="Register"
           component={RegisterScreen}
           options={{ headerShown: false }}
-        />
+        /> */}
         
         <Stack.Screen
           name="Main"
           component={BottomTabs}
           options={{ headerShown: false }}
         />
+   <Stack.Screen
+          name="Quiz"
+          component={Quiz}
+          options={{ headerShown: false }}
+        />
+
+       <Stack.Screen
+          name="Result"
+          component={Result}
+          options={{ headerShown: false }}
+        />
+  
   
       </Stack.Navigator>
     </NavigationContainer>
