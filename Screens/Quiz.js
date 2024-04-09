@@ -8,25 +8,68 @@ import {
   TouchableOpacity,
   Dimensions,
   ImageBackground,
+  BackHandler,
+  Alert
 } from "react-native";
+import { Vibration } from 'react-native';
 import data from "../data";
 import ProgressBar from "../Components/ProgressBar";
 import Questions from "../Components/Questions";
-
+import { useFocusEffect } from '@react-navigation/native'
 const Quiz = ({ navigation }) => {
   const allQuestions = data;
-
-
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [progress, setProgress] = useState(new Animated.Value(1));
   const [fadeAnim, setFadeAnim] = useState(new Animated.Value(1));
-
   const [isOptionsDisabled, setIsOptionsDisabled] = useState(false);
   const [currentOptionSelected, setCurrentOptionSelected] = useState(null);
   const [correctOption, setCorrectOption] = useState(null);
   const [score, setScore] = useState(0);
   const [timer, setTimer] = useState(3); // Initial countdown value (in seconds)
+
+
+
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        showExitAlert();
+        return true;
+      };
+
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+      return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    }, [])
+  );
+
+  const showExitAlert = () => {
+    Alert.alert(
+      'Exit Quiz',
+      'Are you sure you want to quit the quiz?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'Quit',
+          onPress: () =>{
+            setCurrentQuestionIndex(0);
+            setScore(0);
+            setCurrentOptionSelected(null);
+            setCorrectOption(null);
+            setIsOptionsDisabled(false);
+            navigation.goBack()
+          } , // Navigate back when user confirms exit
+          style: 'destructive',
+        },
+      ],
+      { cancelable: false }
+    );
+  };
 
   useEffect(() => {
  
@@ -56,6 +99,14 @@ const Quiz = ({ navigation }) => {
     };
   }, []);
 
+  useEffect(()=>{
+    setCurrentQuestionIndex(0);
+    setScore(0);
+    setCurrentOptionSelected(null);
+    setCorrectOption(null);
+    setIsOptionsDisabled(false);
+  },[])
+
   const restartQuiz = () => {
     setCurrentQuestionIndex(0);
     setScore(0);
@@ -63,6 +114,8 @@ const Quiz = ({ navigation }) => {
     setCorrectOption(null);
     setIsOptionsDisabled(false);
   };
+
+  
   const validateAnswer = (selectedOption, navigation) => {
     if (isOptionsDisabled == false) {
       let correct_option = allQuestions[currentQuestionIndex]["correct_option"];
@@ -72,6 +125,9 @@ const Quiz = ({ navigation }) => {
       setIsOptionsDisabled(true);
       if (selectedOption == correct_option) {
         setScore(score + 1);
+      }
+      else{
+        Vibration.vibrate(500);
       }
     }
   };
@@ -108,6 +164,7 @@ const Quiz = ({ navigation }) => {
   const renderOptions = (navigation) => {
     return (
       <View style={{ marginTop: 40 }}>
+        {console.log("150",currentQuestionIndex)}
         {allQuestions[currentQuestionIndex]?.options.map((option, index) => (
           <Animated.View
             key={index}

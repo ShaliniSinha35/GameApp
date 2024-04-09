@@ -25,7 +25,7 @@ const Section5 = () => {
       <Text  allowFontScaling={false}style={{fontWeight:500,fontSize:22}}>Invite Your Friends</Text>
 
  <View style={{alignItems:"center"}}>
-    <Text></Text>
+ 
     <Text>Build Your Network</Text>
     <TouchableOpacity style={{width:180,backgroundColor:"#f01c8b",padding:20,alignItems:"center",borderRadius:30,marginTop:10}}>
         <Text  allowFontScaling={false}style={{color:"#fff" }}> <Feather name="copy" size={20} color="#111336" />  Copy invite link</Text>

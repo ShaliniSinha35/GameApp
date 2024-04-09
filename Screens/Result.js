@@ -1,15 +1,15 @@
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from "react-native";
 
 const Result = ({ navigation, route }) => {
   const { score } = route.params;
   return (
-    <View style={styles.container}>
+    <ImageBackground source={require("../assets/h2.jpg")} style={styles.container}>
       <View style={styles.subContainer}>
-        <Text style={{ fontSize: 30 }}>Your Score</Text>
+        <Text style={{ fontSize: 25 }}>Your Points</Text>
 
         <View style={styles.textWrapper}>
           <Text style={styles.score}>{score}</Text>
-          <Text style={styles.score}> / 3</Text>
+     
         </View>
         {/* Retry Quiz button */}
         <TouchableOpacity
@@ -18,10 +18,10 @@ const Result = ({ navigation, route }) => {
           }}
           style={styles.btnReset}
         >
-          <Text style={styles.btnText}>Retry</Text>
+          <Text style={[styles.btnText,{fontWeight:500}]}>Play Again</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 
@@ -30,9 +30,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    opacity:0.7
   },
   subContainer: {
-    backgroundColor: "#ffafcc",
+    backgroundColor: "#fff",
     width: "90%",
     borderRadius: 30,
     padding: 10,
@@ -45,8 +46,8 @@ const styles = StyleSheet.create({
     marginVertical: 30,
   },
   score: {
-    fontSize: 30,
-    color: "#ffffff",
+    fontSize: 25,
+    color: "#f01c8b",
     fontWeight: "bold",
   },
   btnReset: {
@@ -61,6 +62,7 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontSize: 20,
     letterSpacing: 1,
+    
   },
 });
 export default Result;

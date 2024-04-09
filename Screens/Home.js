@@ -18,11 +18,12 @@ import Section6 from '../Components/Section6';
 // 3 41b7d1
 
 const width = Dimensions.get('screen').width
-const Home = () => {
+const Home = ({navigation}) => {
   return (
-
+    
     <SafeAreaView
  
+   
     style={{
       paddinTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
       flex: 1,
@@ -30,11 +31,9 @@ const Home = () => {
       // marginTop:5
     }}
   >
-    <StatusBar
-      backgroundColor={"white"}
-      barStyle={"dark-content"}
-      translucent={false}
-    />
+   
+
+{/* {console.log("40",StatusBar.currentHeight)} */}
 
 <ScrollView>
 
@@ -54,7 +53,7 @@ const Home = () => {
 
 
 
-    <Section1></Section1>
+    <Section1 navigation = {navigation}></Section1>
     <Section3></Section3>
     {/* <Text  allowFontScaling={false} 
             style={{

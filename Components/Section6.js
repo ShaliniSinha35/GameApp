@@ -12,7 +12,7 @@ const Section6 = () => {
       id: 0,
       img: require("../assets/user.png"),
       desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      color: "#ffafcc"
+      color: "#f01c8b"
     },
     {
       id: 1,
@@ -24,7 +24,7 @@ const Section6 = () => {
       id: 2,
       img: require("../assets/user.png"),
       desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      color: "#ffafcc"
+      color: "#f01c8b"
     },
     {
       id: 3,

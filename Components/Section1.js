@@ -1,25 +1,27 @@
-import { View, Text, ImageBackground, Dimensions, Image, StyleSheet } from 'react-native'
+import { View, Text, ImageBackground, Dimensions, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { AntDesign } from '@expo/vector-icons';
-const Section1 = () => {
+const Section1 = ({navigation}) => {
   return (
-    <View style={{ marginTop: 10 }}>
-      <ImageBackground style={{ width: Dimensions.get('screen').width, borderBottomLeftRadius: 20, borderBottomRightRadius: 50, borderTopEndRadius: 40, alignItems: "center", justifyContent: "center", opacity: 0.7, paddingTop: 25, paddingBottom: 25 }} source={require("../assets/vdf.png")} >
+    <View style={{ marginTop: 5 }}>
+      <ImageBackground style={{ width: Dimensions.get('screen').width, borderBottomLeftRadius: 20, borderBottomRightRadius: 50, borderTopEndRadius: 40, alignItems: "center", justifyContent: "center", opacity: 0.7, paddingBottom: 25 }} source={require("../assets/vdf.png")} >
 
 
 
         <View style={styles.container}>
-          <MaterialCommunityIcons name="microsoft-xbox-controller-menu" size={44} style={{ margin: 8 }} color="#001845" />
+          <TouchableOpacity      onPress={() => navigation.openDrawer()}>
+            <MaterialCommunityIcons name="microsoft-xbox-controller-menu" size={48} style={{ margin: 8 }} color="#001845" />
+          </TouchableOpacity>
           <Image style={styles.logo} source={require("../assets/logo.png")}></Image>
 
-          <View style={{ alignItems: "center" }}>
+          <TouchableOpacity onPress={()=>navigation.navigate("Profile")} style={{ alignItems: "center" }}>
             <View style={styles.profileCont}>
               <Image source={require("../assets/user.png")} style={{ height: 43, width: 40, resizeMode: "contain" }}></Image>
             </View>
             <Text>Your Profile</Text>
-          </View>
+          </TouchableOpacity>
         </View>
 
         <Text allowFontScaling={false} style={{ fontSize: 25, fontWeight: 700, color: "#d44d5c" }}>FIEDEX POINTS</Text>
@@ -62,13 +64,14 @@ const styles = StyleSheet.create({
     width: Dimensions.get('screen').width,
     flexDirection: "row",
     justifyContent: "space-around",
-    marginBottom: 25
+    marginBottom: 25,
+    marginLeft: 5
   },
   logo: {
-    height: 80,
+    height: 85,
     width: 100,
     resizeMode: "contain",
-    margin: 2
+    // margin: 2
   },
   profileCont: {
     width: 50,
