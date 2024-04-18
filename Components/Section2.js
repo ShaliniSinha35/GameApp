@@ -6,7 +6,7 @@ const width = Dimensions.get('screen').width
 
 const Section2 = () => {
     return (
-        <ImageBackground source={require("../assets/h1.jpg")} style={{ width: width, alignItems: "center",height:150,justifyContent:"center",opacity:0.7,borderBottomLeftRadius:20,borderTopLeftRadius:20,borderBottomRightRadius:20,borderBottomLeftRadius:20,padding:20 }} imageStyle={{ borderRadius: 30}}>
+        <ImageBackground source={require("../assets/h111.jpg")} style={{ width: width, alignItems: "center",height:150,justifyContent:"center",opacity:0.7,borderBottomLeftRadius:20,borderTopLeftRadius:20,borderBottomRightRadius:20,borderBottomLeftRadius:20,padding:20 }} imageStyle={{ borderRadius: 30}}>
 
             <TouchableOpacity style={{ height: 120, width: 300, backgroundColor: "white", borderRadius: 20, alignItems: "center", justifyContent: "center",padding:15 }}>
                 <Text  allowFontScaling={false}style={{ fontSize: 25, fontWeight: 500, color: "#111336" }}>Stack Your Value</Text>

@@ -3,8 +3,8 @@ import React from 'react'
 
 const Referral = () => {
   return (
-    <View>
-      <Text>Referral</Text>
+    <View style={{alignItems:"center"}}>
+    <Text>Coming Soon</Text>
     </View>
   )
 }

@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const Wallet = () => {
+const MiningScreen = () => {
   return (
     <View style={{alignItems:"center"}}>
     <Text>Coming Soon</Text>
@@ -9,4 +9,4 @@ const Wallet = () => {
   )
 }
 
-export default Wallet
+export default MiningScreen

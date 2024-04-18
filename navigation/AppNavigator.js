@@ -6,6 +6,7 @@ import {
     FlatList,
     StyleSheet,
     ScrollView,
+    Image
 } from "react-native";
 import React, { useState, useMemo, useRef, useEffect } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -20,6 +21,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { FontAwesome5 } from '@expo/vector-icons';
 import Home from "../Screens/Home";
 import Profile from "../Screens/Profile";
 import Quiz from "../Screens/Quiz";
@@ -30,8 +32,14 @@ import Result from "../Screens/Result";
 import Terms from "../Screens/Terms";
 import Privacy from "../Screens/Privacy";
 import Faq from "../Screens/Faq";
-
-
+import QuizScreen from "../Screens/QuizScreen";
+import LoginScreen from "../Screens/LoginScreen";
+import RegisterScreen from "../Screens/RegisterScreen";
+import {useAuth } from "../AuthContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import MiningScreen from "../Screens/MiningScreen";
+import RewardScreen from "../Screens/RewardScreen";
+import { HeaderBackButton } from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -39,8 +47,31 @@ const Tab = createBottomTabNavigator();
 
 
 const AppNavigator = () => {
+    const { isLoginValue ,isAlreadyLogin,logout,isLogoutValue} = useAuth();
 
 
+console.log("isLoinValue",isLoginValue,isLogoutValue)
+
+
+    useEffect(() => {
+        isLogin();
+    }, [isLoginValue]); 
+
+
+
+
+    const handleLogout=async(navigation)=>{
+   
+        navigation.navigate("Login");
+        logout()
+    
+    }
+
+    // Ensure setIsLogin(true) triggers a re-render
+    const isLogin = async () => {
+     isAlreadyLogin()
+    
+    };
 
     const drawerMenu = [
 
@@ -94,6 +125,15 @@ const AppNavigator = () => {
                 />
             ),
         },
+        {
+            id: 8,
+            name: "Logout",
+            url: "logout",
+            icon: (
+                <FontAwesome name="sign-in"  size={24}
+                color="white" />
+            ),
+        }
 
 
 
@@ -105,16 +145,34 @@ const AppNavigator = () => {
 
     function StackNavigator() {
         return (
-            <Stack.Navigator initialRouteName="Home">
-                <Stack.Screen
-                    name="Home"
-                    component={Home}
+            <Stack.Navigator >
+
+
+                {
+                    isLoginValue  ? <Stack.Screen
+                        name="Home"
+                        component={Home}
+                        options={{ headerShown: false }}
+                    />
+                        :
+                        <Stack.Screen
+                            name="Login"
+                            component={LoginScreen}
+                            options={{ headerShown: false }}
+                        />
+
+                }
+
+<Stack.Screen
+                    name="ProfileScreen"
+                    component={Profile}
                     options={{ headerShown: false }}
                 />
 
+
                 <Stack.Screen
                     name="Quiz"
-                    component={Quiz}
+                    component={QuizScreen}
                     options={{ headerShown: false }}
                 />
 
@@ -124,11 +182,7 @@ const AppNavigator = () => {
                     options={{ headerShown: false }}
                 />
 
-                <Stack.Screen
-                    name="Profile"
-                    component={Profile}
-                    options={{ headerShown: false }}
-                />
+              
 
                 <Stack.Screen
                     name="Terms"
@@ -146,6 +200,16 @@ const AppNavigator = () => {
                     options={{ headerShown: false }}
                 />
 
+{/* <Stack.Screen
+                    name="Login"
+                    component={LoginScreen}
+                    options={{ headerShown: false }}
+                /> */}
+<Stack.Screen
+                    name="RegisterScreen"
+                    component={RegisterScreen}
+                    options={{ headerShown: false }}
+                />
             </Stack.Navigator>
         );
     }
@@ -231,7 +295,7 @@ const AppNavigator = () => {
                                         }}
                                         onPress={() => {
                                             item.name == "Logout"
-                                                ? handleLogout()
+                                                ? handleLogout(navigation)
 
                                                 // onShare(
                                                 //   `https://expo.dev/artifacts/eas/5ua1tSJD4RS22HLuiVNHzJ.apk`
@@ -267,48 +331,49 @@ const AppNavigator = () => {
 
     const BottomNavigator = () => {
 
-
+        if (!isLoginValue ) {
+            return null;
+        }
         return (
             <Tab.Navigator
-                screenOptions={{ tabBarStyle: { elevation: 15, height: 65, borderTopWidth: 1, backgroundColor: "#fff", opacity: 0.6 } }}
+                screenOptions={{ tabBarStyle: { elevation: 15, height: 65, borderTopWidth: 1, backgroundColor: "#3c1642", opacity: 1,borderColor:"#3c1642" } }}
 
             >
+    <Tab.Screen
+        name="Home"
+        component={StackNavigator}
+        options={{
+            headerShown: false,
+            tabBarLabel: "Quiz To Earn",
+            tabBarLabelStyle: { color: "#fff", fontSize: 12, marginBottom: 5 },
+            tabBarIcon: ({ focused }) =>
+                focused ? (
+                    // <MaterialIcons name="quiz" size={30} color="#41b7d1" />
+                    <Image source={require("../assets/p.png")} style={{width:40,height:40,resizeMode:"contain",elevation:5}}></Image>
+                ) : (
+                    // <MaterialIcons name="quiz" size={30} color="gray"/>
+                    <Image source={require("../assets/p1.png")} style={{width:40,height:40,resizeMode:"contain",elevation:5}}></Image>
+                ),
+        }}
+    />
 
-                <Tab.Screen
-                    name="Home"
-                    component={StackNavigator}
-                    options={{
-                        tabBarLabel: "Home",
-                        tabBarLabelStyle: { color: "#f01c8b", fontSize: 15, marginBottom: 5 },
-                        headerShown: false,
-                        tabBarIcon: ({ focused }) =>
-                            focused ? (
-                                // <Entypo name="home" size={28} color="#41b7d1" />
-                                <MaterialCommunityIcons name="home-circle" size={38} color="#41b7d1" />
-                            ) : (
-                                // <AntDesign name="home" size={28} color="gray" />
-                                <MaterialCommunityIcons name="home-circle-outline" size={38} color="gray" />
-                            ),
-                    }}
-                />
-
-                <Tab.Screen
+                {/* <Tab.Screen
                     name="Quiz To Earn"
-                    component={Quiz}
+                    component={Home}
                     options={{
                         headerShown: false,
                         tabBarLabel: "Quiz To Earn",
-                        tabBarLabelStyle: { color: "#f01c8b", fontSize: 15, marginBottom: 5 },
+                        tabBarLabelStyle: { color: "#fff", fontSize: 12, marginBottom: 5 },
                         tabBarIcon: ({ focused }) =>
                             focused ? (
                                 // <MaterialIcons name="quiz" size={30} color="#41b7d1" />
-                                <MaterialCommunityIcons name="head-question" size={34} color="#41b7d1" />
+                                <Image source={require("../assets/p.png")} style={{width:40,height:40,resizeMode:"contain"}}></Image>
                             ) : (
                                 // <MaterialIcons name="quiz" size={30} color="gray"/>
-                                <MaterialCommunityIcons name="head-question-outline" size={28} color="gray" />
+                                <Image source={require("../assets/p1.png")} style={{width:40,height:40,resizeMode:"contain"}}></Image>
                             ),
                     }}
-                />
+                /> */}
 
 
                 <Tab.Screen
@@ -316,19 +381,76 @@ const AppNavigator = () => {
                     component={Referral}
                     options={{
                         tabBarLabel: "Referral",
-                        tabBarLabelStyle: { color: "#f01c8b", fontSize: 15, marginBottom: 5 },
+                        tabBarLabelStyle: { color: "#fff", fontSize: 12, marginBottom: 5 },
                         tabBarIcon: ({ focused }) =>
                             focused ? (
                                 // <Ionicons name="send" size={28} color="#41b7d1" />
-                                <MaterialCommunityIcons name="send-circle" size={38} color="#41b7d1" />
+                                // <MaterialCommunityIcons name="send-circle" size={38} color="#fff" />
+                                <Image source={require("../assets/w.png")} style={{width:40,height:40,resizeMode:"contain",elevation:5}}></Image>
 
                             ) : (
                                 // <Ionicons name="send" size={28} color="gray" />
-                                <MaterialCommunityIcons name="send-circle-outline" size={38} color="gray" />
+                                // <MaterialCommunityIcons name="send-circle-outline" size={38} color="gray" />
+                                <Image source={require("../assets/w1.png")} style={{width:40,height:40,resizeMode:"contain",elevation:5}}></Image>
+                            ),
+
+                          
+                            
+                    }}
+                />
+
+<Tab.Screen
+                    name="Mining"
+                    component={MiningScreen}
+                    options={{
+                        tabBarLabel: "Minning",
+                        tabBarLabelStyle: { color: "#fff", fontSize: 12, marginBottom: 5 },
+                        tabBarIcon: ({ focused }) =>
+                            focused ? (
+                                // <Ionicons name="send" size={28} color="#41b7d1" />
+                                <Image source={require("../assets/h.png")} style={{width:40,height:40,resizeMode:"contain",elevation:5}}></Image>
+
+                            ) : (
+                                // <Ionicons name="send" size={28} color="gray" />
+                                <Image source={require("../assets/h1.png")} style={{width:40,height:40,resizeMode:"contain",elevation:5}}></Image>
                             ),
                     }}
                 />
-                <Tab.Screen
+                    <Tab.Screen
+                    name="Reward"
+                    component={RewardScreen}
+                    options={{
+                        tabBarLabel: "Reward",
+                        tabBarLabelStyle: { color: "#fff", fontSize: 12, marginBottom: 5 },
+                        tabBarIcon: ({ focused }) =>
+                            focused ? (
+                                // <Ionicons name="send" size={28} color="#41b7d1" />
+                                <Image source={require("../assets/g.png")} style={{width:40,height:40,resizeMode:"contain",elevation:5}}></Image>
+                            ) : (
+                                // <Ionicons name="send" size={28} color="gray" />
+                                <Image source={require("../assets/g1.png")} style={{width:40,height:40,resizeMode:"contain",elevation:5}}></Image>
+                     ),
+                    }}
+                />
+
+<Tab.Screen
+                    name="Wallet"
+                    component={Wallet}
+                    options={{
+                        tabBarLabel: "Wallet",
+                        tabBarLabelStyle: { color: "#fff", fontSize: 12, marginBottom: 5 },
+                        tabBarIcon: ({ focused }) =>
+                            focused ? (
+                                // <Ionicons name="send" size={28} color="#41b7d1" />
+                                <Image source={require("../assets/m.png")} style={{width:40,height:40,resizeMode:"contain",elevation:5}}></Image>
+
+                            ) : (
+                                // <Ionicons name="send" size={28} color="gray" />
+                                <Image source={require("../assets/m1.png")} style={{width:40,height:40,resizeMode:"contain",elevation:5}}></Image>
+                         ),
+                    }}
+                />
+                {/* <Tab.Screen
                     name="Login"
                     component={Login}
                     options={{
@@ -338,14 +460,14 @@ const AppNavigator = () => {
                         tabBarIcon: ({ focused }) =>
                             focused ? (
                                 // <AntDesign name="login" size={28} color="#41b7d1" />
-                                <FontAwesome name="sign-in" size={28} color="#41b7d1" />
+                                <FontAwesome name="sign-in" size={28} color="#fff" />
 
                             ) : (
                                 // <AntDesign name="login" size={28} color="gray" />
                                 <FontAwesome name="sign-in" size={28} color="gray" />
                             ),
                     }}
-                />
+                /> */}
             </Tab.Navigator>
         )
     }
@@ -353,23 +475,156 @@ const AppNavigator = () => {
 
     return (
         <NavigationContainer>
-            <Drawer.Navigator
-                screenOptions={{
-                    drawerStyle: {
-                        backgroundColor: "#ffafcc",
-                        width: 240,
-                        opacity: 0.8
-                    },
-                }}
-                drawerContent={(props) => <DrawerContent {...props} />}
-            >
-                <Drawer.Screen
-                    name="Home"
-                    component={BottomNavigator}
-                    options={{ headerShown: false }}
-                />
-            </Drawer.Navigator>
+
+          
+     {
+    isLoginValue ? <Tab.Navigator
+    screenOptions={{ tabBarStyle: { elevation: 15, height: 65, borderTopWidth: 1, backgroundColor: "#3c1642", opacity: 1,borderColor:"#3c1642" } }}
+
+>
+
+
+    <Tab.Screen
+        name="Home"
+        component={StackNavigator}
+        options={{
+            headerShown: false,
+            tabBarLabel: "Quiz To Earn",
+            tabBarLabelStyle: { color: "#fff", fontSize: 12, marginBottom: 5 },
+            tabBarIcon: ({ focused }) =>
+                focused ? (
+                    // <MaterialIcons name="quiz" size={30} color="#41b7d1" />
+                    <Image source={require("../assets/p.png")} style={{width:40,height:40,resizeMode:"contain"}}></Image>
+                ) : (
+                    // <MaterialIcons name="quiz" size={30} color="gray"/>
+                    <Image source={require("../assets/p1.png")} style={{width:40,height:40,resizeMode:"contain"}}></Image>
+                ),
+        }}
+    />
+
+
+    <Tab.Screen
+        name="Referral"
+        component={Referral}
+        options={{
+            tabBarLabel: "Referral",
+            tabBarLabelStyle: { color: "#fff", fontSize: 12, marginBottom: 5 },
+            tabBarIcon: ({ focused }) =>
+                focused ? (
+                    // <Ionicons name="send" size={28} color="#41b7d1" />
+                    // <MaterialCommunityIcons name="send-circle" size={38} color="#fff" />
+                    <Image source={require("../assets/w.png")} style={{width:40,height:40,resizeMode:"contain"}}></Image>
+
+                ) : (
+                    // <Ionicons name="send" size={28} color="gray" />
+                    // <MaterialCommunityIcons name="send-circle-outline" size={38} color="gray" />
+                    <Image source={require("../assets/w1.png")} style={{width:40,height:40,resizeMode:"contain"}}></Image>
+                ),
+                // headerLeft: () => (
+                //     <MaterialIcons name="keyboard-backspace" size={30} style={{marginLeft:10}} color="black"  />
+                //   ),
+                //   headerBackTitle: 'Custom Back',
+                //   headerBackTitleStyle: { fontSize: 30 },
+        }}
+    />
+
+<Tab.Screen
+        name="Mining"
+        component={MiningScreen}
+        options={{
+            tabBarLabel: "Minning",
+            tabBarLabelStyle: { color: "#fff", fontSize: 12, marginBottom: 5 },
+            tabBarIcon: ({ focused }) =>
+                focused ? (
+                    // <Ionicons name="send" size={28} color="#41b7d1" />
+                    <Image source={require("../assets/h.png")} style={{width:40,height:40,resizeMode:"contain"}}></Image>
+
+                ) : (
+                    // <Ionicons name="send" size={28} color="gray" />
+                    <Image source={require("../assets/h1.png")} style={{width:40,height:40,resizeMode:"contain"}}></Image>
+                ),
+        }}
+    />
+        <Tab.Screen
+        name="Reward"
+        component={RewardScreen}
+        options={{
+            tabBarLabel: "Reward",
+            tabBarLabelStyle: { color: "#fff", fontSize: 12, marginBottom: 5 },
+            tabBarIcon: ({ focused }) =>
+                focused ? (
+                    // <Ionicons name="send" size={28} color="#41b7d1" />
+                    <Image source={require("../assets/g.png")} style={{width:40,height:40,resizeMode:"contain"}}></Image>
+                ) : (
+                    // <Ionicons name="send" size={28} color="gray" />
+                    <Image source={require("../assets/g1.png")} style={{width:40,height:40,resizeMode:"contain"}}></Image>
+         ),
+        }}
+    />
+
+<Tab.Screen
+        name="Wallet"
+        component={Wallet}
+        options={{
+            tabBarLabel: "Wallet",
+            tabBarLabelStyle: { color: "#fff", fontSize: 12, marginBottom: 5 },
+            tabBarIcon: ({ focused }) =>
+                focused ? (
+                    // <Ionicons name="send" size={28} color="#41b7d1" />
+                    <Image source={require("../assets/m.png")} style={{width:40,height:40,resizeMode:"contain"}}></Image>
+
+                ) : (
+                    // <Ionicons name="send" size={28} color="gray" />
+                    <Image source={require("../assets/m1.png")} style={{width:40,height:40,resizeMode:"contain"}}></Image>
+             ),
+        }}
+    />
+   
+</Tab.Navigator>:<StackNavigator>
+     <Stack.Screen
+                            name="Login"
+                            component={LoginScreen}
+                            options={{ headerShown: false }}
+                        />
+</StackNavigator>
+   }
+
+            
         </NavigationContainer>
+//         <NavigationContainer>
+//             {isLoginValue ? ( <Drawer.Navigator
+//                 screenOptions={{
+//                     drawerStyle: {
+//                         backgroundColor: "#3c1642",
+//                         width: 240,
+//                         opacity: 0.8
+//                     },
+//                 }}
+//                 drawerContent={(props) => <DrawerContent {...props} />}
+//             >
+//                 <Drawer.Screen
+//                     name="Home"
+//                     component={BottomNavigator}
+//                     options={{ headerShown: false }}
+//                 />
+//             </Drawer.Navigator>): (
+
+// <StackNavigator>
+
+//       <Stack.Screen
+//                             name="Login"
+//                             component={LoginScreen}
+//                             options={{ headerShown: false }}
+//                         />
+//                               <Stack.Screen
+//                     name="Profile"
+//                     component={Profile}
+//                     options={{ headerShown: false }}
+//                 />
+
+// </StackNavigator>
+// )}
+//         </NavigationContainer>
     );
 };
 

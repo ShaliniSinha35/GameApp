@@ -1,38 +1,47 @@
 import { View, Text, ImageBackground, Dimensions, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-
+import { Entypo } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import { useAuth } from '../AuthContext';
 const Section1 = ({navigation}) => {
+  const {mobile}=useAuth()
   return (
-    <View style={{ marginTop: 5 }}>
-      <ImageBackground style={{ width: Dimensions.get('screen').width, borderBottomLeftRadius: 20, borderBottomRightRadius: 50, borderTopEndRadius: 40, alignItems: "center", justifyContent: "center", opacity: 0.7, paddingBottom: 25 }} source={require("../assets/vdf.png")} >
+    <View style={{ marginTop: 0 }}>
+      <ImageBackground style={{ width: Dimensions.get('screen').width, borderBottomLeftRadius: 20, borderBottomRightRadius: 50, borderTopEndRadius: 40, alignItems: "center", justifyContent: "center", paddingBottom: 45 }} source={require("../assets/vfrg.png")} >
 
 
 
         <View style={styles.container}>
-          <TouchableOpacity      onPress={() => navigation.openDrawer()}>
-            <MaterialCommunityIcons name="microsoft-xbox-controller-menu" size={48} style={{ margin: 8 }} color="#001845" />
-          </TouchableOpacity>
-          <Image style={styles.logo} source={require("../assets/logo.png")}></Image>
+          {/* <TouchableOpacity      onPress={() => navigation.openDrawer()}>
+          <Entypo name="menu"  size={40} style={{ margin: 8 }} color="#edf6f9" />
 
-          <TouchableOpacity onPress={()=>navigation.navigate("Profile")} style={{ alignItems: "center" }}>
+          </TouchableOpacity> */}
+          
+          {/* <Image style={styles.logo} source={require("../assets/logo.png")}></Image> */}
+
+          <TouchableOpacity onPress={()=>navigation.navigate("ProfileScreen")} style={{ alignItems: "center"}}>
             <View style={styles.profileCont}>
               <Image source={require("../assets/user.png")} style={{ height: 43, width: 40, resizeMode: "contain" }}></Image>
             </View>
-            <Text>Your Profile</Text>
+            <Text style={{color:"white"}}>{mobile}</Text>
           </TouchableOpacity>
         </View>
 
-        <Text allowFontScaling={false} style={{ fontSize: 25, fontWeight: 700, color: "#d44d5c" }}>FIEDEX POINTS</Text>
-        <Text allowFontScaling={false} style={{ fontSize: 23, fontWeight: 900, marginTop: 5, color: "#fff", elevation: 10 }}>5.00</Text>
 
-        <Image source={require("../assets/coin.png")} style={{ width: 250, height: 150, resizeMode: "contain" }}></Image>
 
-        <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
-          <View style={{ height: 70, width: 180, backgroundColor: "white", borderRadius: 20, marginRight: 10, alignItems: "center", justifyContent: "center", marginLeft: 5 }}>
+<View style={{backgroundColor:"#fff",padding:20,opacity:0.7,borderRadius:25,alignItems:"center"}}>
+<Text allowFontScaling={false} style={{ fontSize: 25, fontWeight: 800, color: "#f01c8b" }}>FIEDEX POINTS</Text>
+<Text allowFontScaling={false} style={{ fontSize: 23, fontWeight: 900, marginTop: 5, color: "black", elevation: 10 }}>5.00</Text>
 
-            <Text allowFontScaling={false} style={{ fontSize: 18, fontWeight: 500, color: "#f01c8b" }}>Activity Rate  <AntDesign name="infocirlce" size={20} color="#41b7d1" /></Text>
+</View>
+
+        {/* <Image source={require("../assets/coin.png")} style={{ width: 250, height: 150, resizeMode: "contain" }}></Image> */}
+
+        <View style={{ flexDirection: "row", justifyContent: "space-around" ,marginTop:65}}>
+          <View style={{ height: 70, width: 180, backgroundColor: "#f01c8b", borderRadius: 20, marginRight: 10, alignItems: "center", justifyContent: "center", marginLeft: 5,opacity:0.9 }}>
+
+            <Text allowFontScaling={false} style={{ fontSize: 18, fontWeight: 500, color: "#fff" }}>Activity Rate  <AntDesign name="infocirlce" size={20} color="#41b7d1" /></Text>
             <Text allowFontScaling={false} style={{ fontSize: 10, fontWeight: 500, marginTop: 5 }}>0.01 points/hr</Text>
 
 
@@ -41,9 +50,9 @@ const Section1 = ({navigation}) => {
 
 
 
-          <View style={{ height: 70, width: 180, backgroundColor: "white", borderRadius: 20, alignItems: "center", justifyContent: "center" }}>
-            <Text allowFontScaling={false} style={{ fontSize: 18, fontWeight: 500, color: "#f01c8b" }}>Your Network  <AntDesign name="infocirlce" size={20} color="#41b7d1" /></Text>
-            <Text allowFontScaling={false} style={{ fontSize: 10, fontWeight: 500, marginTop: 5 }}>5 Active</Text>
+          <View style={{ height: 70, width: 180, backgroundColor: "#f01c8b", borderRadius: 20, alignItems: "center", justifyContent: "center",opacity:0.9 }}>
+            <Text allowFontScaling={false} style={{ fontSize: 18, fontWeight: 500, color: "#fff" }}>Your Network  <AntDesign name="infocirlce" size={20} color="#41b7d1" /></Text>
+            <Text allowFontScaling={false} style={{ fontSize: 10, fontWeight: 500, marginTop: 5 }}>0 Active</Text>
           </View>
 
 
@@ -57,19 +66,19 @@ const Section1 = ({navigation}) => {
 
 
 const styles = StyleSheet.create({
-  container: {
-    // backgroundColor: '#fff',
-    // marginTop:30,
-    alignItems: "center",
+  container: {  
     width: Dimensions.get('screen').width,
     flexDirection: "row",
-    justifyContent: "space-around",
-    marginBottom: 25,
-    marginLeft: 5
+    justifyContent: "space-between",
+    // marginBottom: 25,
+    // marginLeft: 10,
+    marginRight: 10,
+    marginTop:5,  
+   justifyContent:"flex-end"
   },
   logo: {
-    height: 85,
-    width: 100,
+    height: 70,
+    width: 80,
     resizeMode: "contain",
     // margin: 2
   },
@@ -79,7 +88,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#d11780",
     borderRadius: 50,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+ 
+  
   }
 });
 

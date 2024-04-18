@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     padding: 10,
     alignItems: "center",
+  
   },
   textWrapper: {
     flexDirection: "row",

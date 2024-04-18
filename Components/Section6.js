@@ -18,7 +18,7 @@ const Section6 = () => {
       id: 1,
       img: require("../assets/user.png"),
       desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      color: "#41b7d1"
+      color: "#3c1642"
     },
     {
       id: 2,
@@ -30,7 +30,7 @@ const Section6 = () => {
       id: 3,
       img: require("../assets/user.png"),
       desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      color: "#41b7d1"
+      color: "#3c1642"
     },
 
   ]
@@ -56,7 +56,7 @@ const Section6 = () => {
       <View style={styles.imageCont}>
         <Image
           source={item.img}
-          style={{ width: 60, height: 60, borderRadius: 30, resizeMode: "contain" }}
+          style={{ width: 60, height: 62, borderRadius: 30, resizeMode: "contain" }}
         />
       </View>
       <Text style={{ color: "#faf9f9", fontWeight: "800", textAlign: "justify" }}>{item.desc}</Text>
@@ -66,7 +66,7 @@ const Section6 = () => {
 
   return (
     // ImageBackground source={require("../assets/bg8.png")}
-    <View style={{ marginTop: 15, marginBottom: 20, width: Dimensions.get('screen').width, opacity: 0.7 }}>
+    <View style={{ marginTop: 20, marginBottom: 20, width: Dimensions.get('screen').width, opacity: 1 }}>
       <Text allowFontScaling={false} style={{ fontSize: 24, fontWeight: 700, color: "black", marginLeft: 20 }}>Testimonials </Text>
       <Text allowFontScaling={false}
         style={{

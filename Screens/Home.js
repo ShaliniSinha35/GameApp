@@ -7,6 +7,8 @@ import Section3 from '../Components/Section3';
 import Section4 from '../Components/Section4';
 import Section5 from '../Components/Section5';
 import Section6 from '../Components/Section6';
+import Section8 from '../Components/Section8';
+import Section10 from '../Components/Section10';
 
 // 111336 BACKGROUND COLOR
 // cac51d LOGO COLOR
@@ -54,7 +56,9 @@ const Home = ({navigation}) => {
 
 
     <Section1 navigation = {navigation}></Section1>
-    <Section3></Section3>
+    <Section8 navigation = {navigation}></Section8>
+    {/* <Section10 navigation={navigation}></Section10> */}
+    {/* <Section3 navigation = {navigation}></Section3> */}
     {/* <Text  allowFontScaling={false} 
             style={{
               height: 1,
@@ -64,7 +68,7 @@ const Home = ({navigation}) => {
             
             }}
           /> */}
-    <Section4></Section4>
+  
     {/* <Text  allowFontScaling={false} 
             style={{
               height: 1,
@@ -74,13 +78,21 @@ const Home = ({navigation}) => {
             
             }}
           />  */}
-    <Section5></Section5>
+                 {/* <Section4></Section4> */}
+ 
+          {/* <ImageBackground source={require("../assets/h2.jpg")} style={{marginTop:0,borderTopLeftRadius:20,borderTopRightRadius:20}}>
+
+   
+
+          <Section5></Section5>
 
     
-    <Section6></Section6>
-    
-    <Section2></Section2>
+<Section6></Section6>
 
+
+          </ImageBackground> */}
+   
+          {/* <Section2></Section2> */}
     {/* <Section6></Section6> */}
    
     </ScrollView>
